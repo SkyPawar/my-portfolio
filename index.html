@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sky Pawar - Curriculum Vitae</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/dist/tippy.css" />
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <script src="https://unpkg.com/tippy.js@6"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            light: '#a855f7', // Purple
+                            DEFAULT: '#7e22ce',
+                            dark: '#581c87',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #0f172a;
+            color: #e2e8f0;
+        }
+
+        .glass-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .skill-tag {
+            cursor: help;
+        }
+
+        .skill-tag:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(168, 85, 247, 0.4);
+        }
+
+        /* Cursor hover effect */
+        .cursor-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #a855f7;
+            position: fixed;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        .cursor-outline {
+            width: 40px;
+            height: 40px;
+            border: 2px solid rgba(168, 85, 247, 0.5);
+            position: fixed;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            transition: all 0.1s ease-out;
+        }
+
+        /* Navbar links hover effect */
+        .nav-link {
+            position: relative;
+            padding: 0.5rem 0.2rem;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 50%;
+            background: #a855f7;
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-link:hover::after {
+            width: 80%;
+        }
+
+        .nav-link:hover {
+            color: #a855f7;
+            text-shadow: 0 0 10px rgba(168, 85, 247, 0.4);
+        }
+
+        /* Glass effect refinement */
+        .glass-nav {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            /* Aa line thi navbar patti ne badle capsule banishe */
+            margin-top: 15px;
+            border-radius: 100px;
+            width: 95%;
+            /* Side mathi thodi jagya rakhva */
+            left: 50%;
+            transform: translateX(-50%);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .nav-scrolled {
+            margin-top: 5px;
+            width: 90%;
+            background: rgba(15, 23, 42, 0.9);
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+        }
+    </style>
+</head>
+
+<body class="antialiased selection:bg-brand selection:text-white">
+
+    <nav class="fixed z-50 glass-nav">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex items-center justify-between h-16">
+
+                <div class="flex-shrink-0 group">
+                    <a href="#home" class="text-xl font-bold tracking-tighter">
+                        <span
+                            class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500 group-hover:from-purple-500 group-hover:to-blue-400 transition-all duration-500">
+                            &lt;SKY /&gt;
+                        </span>
+                        <span class="text-white ml-1">PAWAR</span>
+                    </a>
+                </div>
+
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="#home"
+                        class="nav-link text-xs font-medium text-gray-300 hover:text-white uppercase tracking-wider transition">Home</a>
+                    <a href="#about"
+                        class="nav-link text-xs font-medium text-gray-300 hover:text-white uppercase tracking-wider transition">About</a>
+                    <a href="#skills"
+                        class="nav-link text-xs font-medium text-gray-300 hover:text-white uppercase tracking-wider transition">Skills</a>
+                    <a href="#experience"
+                        class="nav-link text-xs font-medium text-gray-300 hover:text-white uppercase tracking-wider transition">Experience</a>
+                    <a href="#projects"
+                        class="nav-link text-xs font-medium text-gray-300 hover:text-white uppercase tracking-wider transition">Projects</a>
+
+                    <a href="#contact"
+                        class="bg-gradient-to-r from-blue-600 to-purple-600 hover:scale-105 text-white px-5 py-2 rounded-full text-xs font-bold transition-all shadow-lg shadow-purple-500/20">
+                        Contact Me
+                    </a>
+
+                    <button id="theme-toggle" class="p-2 rounded-full hover:bg-white/10 transition">
+                        <i id="theme-icon" class="fas fa-moon text-yellow-400"></i>
+                    </button>
+                </div>
+
+                <div class="md:hidden">
+                    <button class="text-white p-2">
+                        <i class="fas fa-bars-staggered"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Home Section -->
+    <section id="home" class="relative min-h-screen flex items-center justify-center pt-16 overflow-hidden">
+
+        <div class="absolute inset-0 z-0">
+            <img src="images/horobg.jpg" class="w-full h-full object-cover" alt="Background">
+
+            <div class="absolute inset-0 bg-slate-950/70"></div>
+        </div>
+
+        <div class="text-center z-10 px-4">
+            <p class="text-brand-light font-semibold tracking-wide uppercase mb-4 drop-shadow-md">Welcome to my
+                Profile</p>
+
+            <h1 class="text-5xl md:text-7xl font-bold mb-6 text-white drop-shadow-2xl">
+                Hi, I'm <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">Sky
+                    Pawar</span>
+            </h1>
+
+            <h2 class="text-2xl md:text-3xl text-gray-200 mb-8 font-medium" id="typing-text">Software Developer</h2>
+
+            <p class="max-w-2xl mx-auto text-gray-300 mb-10 text-lg leading-relaxed">
+                Specialize in Python, Full Stack Development, and AI/ML Solutions.
+                Turning complex logic into elegant, scalable code.
+            </p>
+
+            <div class="flex justify-center gap-4">
+                <a href="#contact"
+                    class="bg-brand hover:bg-brand-dark text-white font-bold py-3 px-8 rounded-full shadow-lg transition transform hover:scale-105">
+                    Hire Me
+                </a>
+                <a href="#projects"
+                    class="backdrop-blur-md bg-white/10 border border-white/20 text-white hover:bg-white/20 font-bold py-3 px-8 rounded-full transition">
+                    View Work
+                </a>
+            </div>
+
+            <div class="mt-12 flex justify-center space-x-6 text-white/80">
+                <a href="https://www.linkedin.com/in/sky-pawar-78a21b215" target="_blank"
+                    class="hover:text-blue-400 text-2xl transition"><i class="fab fa-linkedin"></i></a>
+                <a href="https://wa.me/919016771631" target="_blank" class="hover:text-green-400 text-2xl transition"><i
+                        class="fab fa-whatsapp"></i></a>
+                <a href="https://instagram.com/skyp_official" target="_blank"
+                    class="hover:text-pink-500 text-2xl transition"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Me Section -->
+    <section id="about" class="py-20 bg-gray-900/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div class="relative">
+                    <div
+                        class="absolute -inset-4 bg-gradient-to-r from-blue-600 to-brand rounded-xl blur-lg opacity-50">
+                    </div>
+                    <img src="images/main.webp" alt="Sky Pawar"
+                        class="relative rounded-xl shadow-2xl w-full object-cover h-[400px]">
+                </div>
+                <div>
+                    <h2 class="text-3xl font-bold mb-6 border-l-4 border-brand pl-4">About Me</h2>
+                    <p class="text-gray-300 mb-4 leading-relaxed">
+                        I am a passionate <strong>Software Developer</strong> with a Master's degree in Computer
+                        Applications (MCA) and a knack for building robust applications. My journey in tech started
+                        early, and today I have over a year of professional experience delivering high-quality Python
+                        and Full-Stack solutions.
+                    </p>
+                    <p class="text-gray-300 mb-6 leading-relaxed">
+                        Currently working at <strong>Quirkbees Technologies India</strong>, I focus on creating scalable
+                        backend systems, AI/ML integration, and dynamic user interfaces. I believe in continuous
+                        learning and leveraging the latest technologies to solve real-world problems.
+                    </p>
+
+                    <div class="grid grid-cols-2 gap-4 text-sm">
+                        <div>
+                            <p class="text-gray-400">Name:</p>
+                            <p class="font-semibold">Sky Pawar</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-400">Email:</p>
+                            <p class="font-semibold">psky78935@gmail.com</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-400">Phone:</p>
+                            <p class="font-semibold">+91 90167 71631</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-400">Experience:</p>
+                            <p class="font-semibold">1+ Year</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-20">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <h2 class="text-3xl font-bold mb-12"><span class="text-brand-light">Technical</span> Skills</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 text-left">
+                <div class="glass-card p-6 rounded-xl hover:bg-gray-800 transition">
+                    <h3 class="text-xl font-bold mb-4 text-blue-400"><i class="fas fa-code mr-2"></i>Frontend</h3>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="bg-gray-700 px-3 py-1 rounded-full text-xs skill-tag"
+                            data-tippy-content="Semantic HTML, Accessibility, SEO Basics">HTML5</span>
+                        <span class="bg-gray-700 px-3 py-1 rounded-full text-xs skill-tag"
+                            data-tippy-content="Flexbox, Grid, Animations, Responsive Design">CSS3</span>
+                        <span class="bg-gray-700 px-3 py-1 rounded-full text-xs skill-tag"
+                            data-tippy-content="ES6+, DOM Manipulation, Async/Await">JavaScript</span>
+                        <span class="bg-gray-700 px-3 py-1 rounded-full text-xs skill-tag"
+                            data-tippy-content="Vuex, Vue Router, Composition API">Vue.js</span>
+                    </div>
+                    <div class="text-xs mb-1 flex justify-between"><span>Proficiency</span><span>85%</span></div>
+                    <div class="w-full bg-gray-700/50 rounded-full h-1.5">
+                        <div class="bg-blue-400 h-1.5 rounded-full" style="width: 85%"></div>
+                    </div>
+                </div>
+
+                <div class="glass-card p-6 rounded-xl hover:bg-gray-800 transition">
+                    <h3 class="text-xl font-bold mb-4 text-yellow-400"><i class="fab fa-python mr-2"></i>Python Stack
+                    </h3>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="bg-gray-700 px-3 py-1 rounded-full text-xs skill-tag"
+                            data-tippy-content="Pandas, NumPy, Matplotlib, Scrapy">Python</span>
+                        <span class="bg-gray-700 px-3 py-1 rounded-full text-xs skill-tag"
+                            data-tippy-content="Rest APIs, ORM, Authentication">Django</span>
+                        <span class="bg-gray-700 px-3 py-1 rounded-full text-xs skill-tag"
+                            data-tippy-content="Microservices, Jinja2">Flask</span>
+                        <span class="bg-gray-700 px-3 py-1 rounded-full text-xs skill-tag"
+                            data-tippy-content="Asynchronous APIs, Pydantic">FastAPI</span>
+                    </div>
+                    <div class="text-xs mb-1 flex justify-between"><span>Proficiency</span><span>90%</span></div>
+                    <div class="w-full bg-gray-700/50 rounded-full h-1.5">
+                        <div class="bg-yellow-400 h-1.5 rounded-full" style="width: 90%"></div>
+                    </div>
+                </div>
+
+                <div class="glass-card p-6 rounded-xl hover:bg-gray-800 transition">
+                    <h3 class="text-xl font-bold mb-4 text-purple-400"><i class="fab fa-php mr-2"></i>PHP Stack</h3>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="bg-gray-700 px-3 py-1 rounded-full text-xs skill-tag"
+                            data-tippy-content="Core PHP, MVC Architecture, OOPs">PHP</span>
+                        <span class="bg-gray-700 px-3 py-1 rounded-full text-xs skill-tag"
+                            data-tippy-content="Eloquent ORM, Blade Templates, Migrations">Laravel</span>
+                        <span class="bg-gray-700 px-3 py-1 rounded-full text-xs skill-tag"
+                            data-tippy-content="Query Builder, Form Validation, Simple MVC">CodeIgniter</span>
+                    </div>
+                    <div class="text-xs mb-1 flex justify-between"><span>Proficiency</span><span>80%</span></div>
+                    <div class="w-full bg-gray-700/50 rounded-full h-1.5">
+                        <div class="bg-purple-400 h-1.5 rounded-full" style="width: 80%"></div>
+                    </div>
+                </div>
+
+                <div class="glass-card p-6 rounded-xl hover:bg-gray-800 transition">
+                    <h3 class="text-xl font-bold mb-4 text-green-400"><i class="fas fa-brain mr-2"></i>Tools & AI</h3>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="bg-gray-700 px-3 py-1 rounded-full text-xs skill-tag"
+                            data-tippy-content="MySQL, PostgreSQL, Database Optimization">SQL / DB</span>
+                        <span class="bg-gray-700 px-3 py-1 rounded-full text-xs skill-tag"
+                            data-tippy-content="EC2, S3, Deployment, IAM">AWS</span>
+                        <span class="bg-gray-700 px-3 py-1 rounded-full text-xs skill-tag"
+                            data-tippy-content="Version Control, Branching, GitHub, GitLab">GIT</span>
+                        <span class="bg-gray-700 px-3 py-1 rounded-full text-xs skill-tag"
+                            data-tippy-content="Scikit-learn, Model Training, Data Cleaning">AI & ML</span>
+                    </div>
+                    <div class="text-xs mb-1 flex justify-between"><span>Proficiency</span><span>75%</span></div>
+                    <div class="w-full bg-gray-700/50 rounded-full h-1.5">
+                        <div class="bg-green-400 h-1.5 rounded-full" style="width: 75%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience & Education Section -->
+    <section id="experience" class="py-20 bg-gray-900/50">
+        <div class="max-w-6xl mx-auto px-4">
+            <h2 class="text-3xl font-bold mb-12 text-center">Experience & Education</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <div>
+                    <h3 class="text-2xl font-bold mb-6 text-brand-light flex items-center"><i
+                            class="fas fa-briefcase mr-3"></i>Experience</h3>
+                    <div class="border-l-2 border-brand ml-3 pl-8 pb-8 relative">
+                        <span class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-brand"></span>
+                        <h4 class="text-xl font-semibold">Python Developer</h4>
+                        <p class="text-blue-400 text-sm mb-2">Quirkbees Technologies India</p>
+                        <p class="text-gray-400 text-xs mb-3"> (1+ Year) Continue</p>
+                        <p class="text-gray-300 text-sm">Working on developing scalable backend solutions, integrating
+                            APIs, and managing database optimizations using Python frameworks.</p>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-2xl font-bold mb-6 text-brand-light flex items-center"><i
+                            class="fas fa-graduation-cap mr-3"></i>Education</h3>
+
+                    <div class="border-l-2 border-gray-700 ml-3 pl-8 pb-8 relative">
+                        <span class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-gray-600"></span>
+                        <h4 class="text-lg font-semibold">Masters in MCA</h4>
+                        <p class="text-blue-400 text-sm">Bhagwan Mahavir University</p>
+                        <p class="text-gray-500 text-xs">May 2024</p>
+                    </div>
+
+                    <div class="border-l-2 border-gray-700 ml-3 pl-8 pb-8 relative">
+                        <span class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-gray-600"></span>
+                        <h4 class="text-lg font-semibold">Graduation in BCA</h4>
+                        <p class="text-blue-400 text-sm">VNSGU</p>
+                        <p class="text-gray-500 text-xs">Feb 2019</p>
+                    </div>
+
+                    <div class="border-l-2 border-gray-700 ml-3 pl-8 pb-8 relative">
+                        <span class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-gray-600"></span>
+                        <h4 class="text-lg font-semibold">HSC Board (G.S.H.S.E.B)</h4>
+                        <p class="text-blue-400 text-sm">Samrat International School</p>
+                        <p class="text-gray-500 text-xs">March 2014</p>
+                    </div>
+
+                    <div class="border-l-2 border-gray-700 ml-3 pl-8 relative">
+                        <span class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-gray-600"></span>
+                        <h4 class="text-lg font-semibold">SSC Board (G.S.E.B)</h4>
+                        <p class="text-blue-400 text-sm">Karuna Sagar Vidhyalay</p>
+                        <p class="text-gray-500 text-xs">March 2012</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-20">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-3xl font-bold mb-12 text-center" data-aos="fade-up">My Personal <span
+                    class="text-brand-light">Projects</span>
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div
+                    class="glass-card rounded-xl overflow-hidden hover:shadow-2xl hover:shadow-brand/20 transition group">
+                    <div class="p-6">
+                        <div class="h-12 w-12 bg-pink-500 rounded-lg flex items-center justify-center mb-4 text-white">
+                            <i class="fas fa-heartbeat text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Breast Cancer Detection</h3>
+                        <p class="text-gray-400 text-sm mb-4">Analysis using Machine Learning algorithms to predict and
+                            detect anomalies.</p>
+                        <span class="text-xs font-mono text-brand-light">Python • ML • Pandas</span>
+                        <div class="mt-4 flex gap-3">
+                            <a href="javascript:void(0)" onclick="openModal(event)"
+                                class="text-xs bg-brand/20 hover:bg-brand text-brand-light hover:text-white px-3 py-1 rounded-md transition">
+                                <i class="fas fa-external-link-alt mr-1"></i> Live Demo
+                            </a>
+                            <a href="javascript:void(0)" onclick="openModal(event)"
+                                class="text-xs bg-gray-700 hover:bg-gray-600 text-white px-3 py-1 rounded-md transition">
+                                <i class="fab fa-github mr-1"></i> Code
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    class="glass-card rounded-xl overflow-hidden hover:shadow-2xl hover:shadow-brand/20 transition group">
+                    <div class="p-6">
+                        <div class="h-12 w-12 bg-green-500 rounded-lg flex items-center justify-center mb-4 text-white">
+                            <i class="fas fa-users-cog text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">CRM Project</h3>
+                        <p class="text-gray-400 text-sm mb-4">Customer Relationship Management system built with Python
+                            and Django framework.</p>
+                        <span class="text-xs font-mono text-brand-light">Django • Python • SQL</span>
+                        <div class="mt-4 flex gap-3">
+                            <a href="javascript:void(0)" onclick="openModal(event)"
+                                class="text-xs bg-brand/20 hover:bg-brand text-brand-light hover:text-white px-3 py-1 rounded-md transition">
+                                <i class="fas fa-external-link-alt mr-1"></i> Live Demo
+                            </a>
+                            <a href="javascript:void(0)" onclick="openModal(event)"
+                                class="text-xs bg-gray-700 hover:bg-gray-600 text-white px-3 py-1 rounded-md transition">
+                                <i class="fab fa-github mr-1"></i> Code
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    class="glass-card rounded-xl overflow-hidden hover:shadow-2xl hover:shadow-brand/20 transition group">
+                    <div class="p-6">
+                        <div
+                            class="h-12 w-12 bg-yellow-500 rounded-lg flex items-center justify-center mb-4 text-white">
+                            <i class="fas fa-allergies text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Skin Disease Detection</h3>
+                        <p class="text-gray-400 text-sm mb-4">AI-based analysis tool to identify various skin diseases
+                            from images.</p>
+                        <span class="text-xs font-mono text-brand-light">AI • Image Processing</span>
+                        <div class="mt-4 flex gap-3">
+                            <a href="javascript:void(0)" onclick="openModal(event)"
+                                class="text-xs bg-brand/20 hover:bg-brand text-brand-light hover:text-white px-3 py-1 rounded-md transition">
+                                <i class="fas fa-external-link-alt mr-1"></i> Live Demo
+                            </a>
+                            <a href="javascript:void(0)" onclick="openModal(event)"
+                                class="text-xs bg-gray-700 hover:bg-gray-600 text-white px-3 py-1 rounded-md transition">
+                                <i class="fab fa-github mr-1"></i> Code
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    class="glass-card rounded-xl overflow-hidden hover:shadow-2xl hover:shadow-brand/20 transition group">
+                    <div class="p-6">
+                        <div class="h-12 w-12 bg-blue-500 rounded-lg flex items-center justify-center mb-4 text-white">
+                            <i class="fas fa-laptop-code text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Personal Portfolio</h3>
+                        <p class="text-gray-400 text-sm mb-4">A live, responsive portfolio website showcasing skills and
+                            experience.</p>
+                        <span class="text-xs font-mono text-brand-light">HTML • Tailwind • JS</span>
+                        <div class="mt-4 flex gap-3">
+                            <a href="javascript:void(0)" onclick="openModal(event)"
+                                class="text-xs bg-brand/20 hover:bg-brand text-brand-light hover:text-white px-3 py-1 rounded-md transition">
+                                <i class="fas fa-external-link-alt mr-1"></i> Live Demo
+                            </a>
+                            <a href="javascript:void(0)" onclick="openModal(event)"
+                                class="text-xs bg-gray-700 hover:bg-gray-600 text-white px-3 py-1 rounded-md transition">
+                                <i class="fab fa-github mr-1"></i> Code
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    class="glass-card rounded-xl overflow-hidden hover:shadow-2xl hover:shadow-brand/20 transition group">
+                    <div class="p-6">
+                        <div class="h-12 w-12 bg-red-500 rounded-lg flex items-center justify-center mb-4 text-white">
+                            <i class="fas fa-car text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Garage Management SaaS</h3>
+                        <p class="text-gray-400 text-sm mb-4">A complete SaaS based solution built on PHP-Laravel
+                            framework.</p>
+                        <span class="text-xs font-mono text-brand-light">Laravel • PHP • MySQL</span>
+                        <div class="mt-4 flex gap-3">
+                            <a href="javascript:void(0)" onclick="openModal(event)"
+                                class="text-xs bg-brand/20 hover:bg-brand text-brand-light hover:text-white px-3 py-1 rounded-md transition">
+                                <i class="fas fa-external-link-alt mr-1"></i> Live Demo
+                            </a>
+                            <a href="javascript:void(0)" onclick="openModal(event)"
+                                class="text-xs bg-gray-700 hover:bg-gray-600 text-white px-3 py-1 rounded-md transition">
+                                <i class="fab fa-github mr-1"></i> Code
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    class="glass-card rounded-xl overflow-hidden hover:shadow-2xl hover:shadow-brand/20 transition group">
+                    <div class="p-6">
+                        <div
+                            class="h-12 w-12 bg-indigo-500 rounded-lg flex items-center justify-center mb-4 text-white">
+                            <i class="fas fa-chart-line text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Forex Trading App</h3>
+                        <p class="text-gray-400 text-sm mb-4">Real-time trading application frontend developed using
+                            Vue.js.</p>
+                        <span class="text-xs font-mono text-brand-light">Vue.js • API</span>
+                        <div class="mt-4 flex gap-3">
+                            <a href="javascript:void(0)" onclick="openModal(event)"
+                                class="text-xs bg-brand/20 hover:bg-brand text-brand-light hover:text-white px-3 py-1 rounded-md transition">
+                                <i class="fas fa-external-link-alt mr-1"></i> Live Demo
+                            </a>
+                            <a href="javascript:void(0)" onclick="openModal(event)"
+                                class="text-xs bg-gray-700 hover:bg-gray-600 text-white px-3 py-1 rounded-md transition">
+                                <i class="fab fa-github mr-1"></i> Code
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Work Gallery Section -->
+    <section class="py-20 bg-gray-900/50">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-3xl font-bold mb-12 text-center">My <span class="text-brand-light">Work Gallery</span></h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="overflow-hidden rounded-xl h-64 border border-gray-700">
+                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=600"
+                        alt="Work 1" class="w-full h-full object-cover hover:scale-110 transition duration-500">
+                </div>
+                <div class="overflow-hidden rounded-xl h-64 border border-gray-700">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=600"
+                        alt="Work 2" class="w-full h-full object-cover hover:scale-110 transition duration-500">
+                </div>
+                <div class="overflow-hidden rounded-xl h-64 border border-gray-700">
+                    <img src="https://images.unsplash.com/photo-1555099962-4199c345e5dd?auto=format&fit=crop&q=80&w=600"
+                        alt="Work 3" class="w-full h-full object-cover hover:scale-110 transition duration-500">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 relative">
+        <div class="max-w-4xl mx-auto px-4">
+            <h2 class="text-3xl font-bold mb-12 text-center">Get In <span class="text-brand-light">Touch</span></h2>
+
+            <div class="glass-card rounded-2xl p-8 md:p-12 shadow-2xl">
+                <form id="inquiryForm" onsubmit="sendToWhatsApp(event)" class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm text-gray-400 mb-2">Your Name</label>
+                            <input type="text" id="name" required
+                                class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-brand-light transition text-white">
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-400 mb-2">Phone Number</label>
+                            <input type="tel" id="phone"
+                                class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-brand-light transition text-white">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm text-gray-400 mb-2">Project Type / Subject</label>
+                        <input type="text" id="subject"
+                            class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-brand-light transition text-white">
+                    </div>
+                    <div>
+                        <label class="block text-sm text-gray-400 mb-2">Message</label>
+                        <textarea id="message" rows="4" required
+                            class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-brand-light transition text-white"></textarea>
+                    </div>
+
+                    <button type="submit"
+                        class="w-full bg-gradient-to-r from-blue-600 to-brand text-white font-bold py-4 rounded-lg hover:shadow-lg hover:opacity-90 transition flex items-center justify-center gap-2">
+                        <i class="fab fa-whatsapp text-xl"></i> Send Inquiry via WhatsApp
+                    </button>
+                    <p class="text-center text-xs text-gray-500 mt-2">*This will open WhatsApp with your message
+                        pre-filled.</p>
+                </form>
+
+                <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6 text-center border-t border-gray-700 pt-8">
+                    <div>
+                        <i class="fas fa-envelope text-brand-light text-2xl mb-2"></i>
+                        <p class="text-sm">psky78935@gmail.com</p>
+                    </div>
+                    <div>
+                        <i class="fas fa-phone text-brand-light text-2xl mb-2"></i>
+                        <p class="text-sm">+91 90167 71631</p>
+                    </div>
+                    <div>
+                        <i class="fas fa-map-marker-alt text-brand-light text-2xl mb-2"></i>
+                        <p class="text-sm">India</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="projectModal"
+        class="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/80 backdrop-blur-md hidden opacity-0 transition-opacity duration-300">
+        <div
+            class="glass-card p-8 rounded-2xl max-w-sm w-full mx-4 text-center border-brand/30 shadow-2xl shadow-brand/20">
+            <div class="w-20 h-20 bg-brand/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                <i class="fas fa-hammer text-3xl text-brand-light animate-bounce"></i>
+            </div>
+            <h3 class="text-2xl font-bold text-white mb-2">Coming Soon!</h3>
+            <p class="text-gray-400 mb-6 text-sm">
+                Live Demo and Source Code is under progress. <br>
+                <span class="text-brand-light font-medium mt-2 block italic">Thank you for understanding!</span>
+            </p>
+            <button onclick="closeModal()"
+                class="w-full bg-brand hover:bg-brand-dark text-white font-bold py-3 rounded-xl transition-all shadow-lg">
+                Got it!
+            </button>
+        </div>
+    </div>
+
+    <footer class="bg-gray-950 py-8 border-t border-gray-900">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col items-center">
+            <div class="flex space-x-6 mb-4">
+                <a href="https://instagram.com/skyp_official" class="text-gray-400 hover:text-pink-500 transition"><i
+                        class="fab fa-instagram text-xl"></i></a>
+                <a href="https://wa.me/919016771631" class="text-gray-400 hover:text-green-500 transition"><i
+                        class="fab fa-whatsapp text-xl"></i></a>
+                <a href="https://www.linkedin.com/in/sky-pawar-78a21b215"
+                    class="text-gray-400 hover:text-blue-500 transition"><i class="fab fa-linkedin text-xl"></i></a>
+            </div>
+            <p class="text-gray-500 text-sm">
+                Copyright &copy; 2017 <i class="fas fa-heart text-red-500 animate-pulse mx-1"></i> Sky Pawar. All Rights
+                Reserved.
+            </p>
+        </div>
+    </footer>
+    <button id="backToTop"
+        class="fixed bottom-8 right-8 p-3 rounded-full bg-brand text-white shadow-2xl opacity-0 transition-opacity duration-300 z-50">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        function sendToWhatsApp(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+
+            // Format the message
+            const text = `*New Inquiry for Sky Pawar*%0A%0A*Name:* ${name}%0A*Phone:* ${phone}%0A*Subject:* ${subject}%0A*Message:* ${message}`;
+
+            // Your number
+            const myNumber = "919016771631";
+
+            // Redirect
+            window.open(`https://wa.me/${myNumber}?text=${text}`, '_blank');
+        }
+    </script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <script>
+        AOS.init({ duration: 1000, once: true });
+    </script>
+    <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
+    <script>
+        var typed = new Typed('#typing-text', {
+            strings: ['Software Developer', 'Python Expert', 'Full Stack Developer', 'AI/ML Enthusiast'],
+            typeSpeed: 50,
+            backSpeed: 30,
+            loop: true
+        });
+    </script>
+    <script>
+        const dot = document.createElement("div");
+        const outline = document.createElement("div");
+        dot.className = "cursor-dot";
+        outline.className = "cursor-outline";
+        document.body.appendChild(dot);
+        document.body.appendChild(outline);
+
+        window.addEventListener("mousemove", (e) => {
+            dot.style.left = `${e.clientX}px`;
+            dot.style.top = `${e.clientY}px`;
+            outline.style.left = `${e.clientX - 16}px`;
+            outline.style.top = `${e.clientY - 16}px`;
+        });
+    </script>
+    <script>
+        const backToTop = document.getElementById('backToTop');
+        window.onscroll = function () {
+            if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+                backToTop.style.opacity = "1";
+            } else {
+                backToTop.style.opacity = "0";
+            }
+        };
+        backToTop.onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+    </script>
+    <script>
+        window.addEventListener('scroll', function () {
+            const nav = document.querySelector('.glass-nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('nav-scrolled');
+            } else {
+                nav.classList.remove('nav-scrolled');
+            }
+        });
+    </script>
+    <script>
+        // Tooltip initialize
+        tippy('[data-tippy-content]', {
+            placement: 'top',
+            animation: 'fade',
+            theme: 'translucent',
+            arrow: true,
+        });
+    </script>
+    <script>
+        const modal = document.getElementById('projectModal');
+
+        function openModal(e) {
+            e.preventDefault();
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.add('opacity-100');
+            }, 10);
+        }
+
+        function closeModal() {
+            modal.classList.remove('opacity-100');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        // Modal ની બહાર ક્લિક કરવાથી પણ બંધ થશે
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+    </script>
+</body>
+
+</html>
