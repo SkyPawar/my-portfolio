@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Sky Pawar - Curriculum Vitae</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -331,14 +331,15 @@
                     <i class="fas fa-download"></i> Download CV
                 </a>
             </div>
-            <div class="mt-6 flex justify-center items-center gap-2 animate-bounce">
-                <div class="px-4 py-1.5 rounded-full bg-brand/10 border border-brand/20 backdrop-blur-md">
-                    <p class="text-[10px] md:text-xs font-mono text-brand-light tracking-widest uppercase">
-                        <i class="fas fa-terminal mr-2"></i>
-                        Type <span class="font-bold underline">"hack"</span> anywhere to see magic of site | Reload to
-                        exit
-                        <span class="md:hidden text-[11px]">Tap <span class="font-bold underline text-white italic">"SKY
-                                PAWAR"</span> 3 times for magic!</span>
+            <div class="mt-6 flex justify-center items-center gap-2 animate-bounce magic-hint">
+                <div class="px-4 py-2 rounded-full bg-brand/10 border border-brand/20 backdrop-blur-md shadow-lg">
+                    <p class="text-[10px] md:text-sm font-mono text-brand-light tracking-widest uppercase text-center">
+                        <i class="fas fa-terminal mr-2"></i> 
+                        
+                        <span class="hidden md:inline">Type <span class="font-bold underline text-white">"hack"</span> anywhere to see magic</span>
+                        
+                        <span class="inline md:hidden text-[11px]">Tap <span class="font-bold underline text-white italic">"SKY PAWAR"</span> 3 times for magic!</span>
+                        
                         <span class="block text-[9px] text-gray-500 mt-1">Reload to normal mode</span>
                     </p>
                 </div>
@@ -1448,4 +1449,5 @@ class ProductSpider(scrapy.Spider):
 </body>
 
 </html>
+
 
