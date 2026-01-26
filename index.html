@@ -196,27 +196,23 @@
         }
 
         /* Mobile Specific Fixes */
+        #chat-window {
+            display: none; /* JavaScript થી આ flex માં બદલાશે */
+            box-sizing: border-box;
+        }
+        
+        /* જ્યારે ચેટ ચાલુ હોય ત્યારે આ ક્લાસ JavaScript થી ઉમેરવો */
+        #chat-window.show-chat {
+            display: flex !important;
+        }
+        
         @media (max-width: 768px) {
             #chat-window {
-                /* વિન્ડોની સાઈઝ મોબાઈલ મુજબ ફિક્સ */
-                width: 85vw !important;
-                height: 380px !important; 
-                bottom: 90px !important;
+                width: 90vw !important;
+                height: 380px !important;
+                /* મોબાઈલ બ્રાઉઝરના બોટમ બારથી બચવા માટે */
+                bottom: 85px !important; 
             }
-        
-            /* કીબોર્ડ ખુલે ત્યારે ઇનપુટ બોક્સ દેખાય તે માટે */
-            #user-input {
-                font-size: 16px !important; /* ૧૬px રાખવાથી મોબાઈલ બ્રાઉઝર ઓટો-ઝૂમ નહીં કરે */
-            }
-        }
-        
-        /* Scrollbar styling */
-        .custom-scrollbar::-webkit-scrollbar {
-            width: 3px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #3b82f6;
-            border-radius: 10px;
         }
     </style>
 </head>
@@ -868,23 +864,23 @@
 
     <!-- AI Career Counselor Section -->
     <div id="ai-bot-container" class="fixed bottom-6 left-6 z-[100]">
-        <div id="chat-window" class="hidden fixed bottom-24 left-1/2 -translate-x-1/2 md:left-6 md:translate-x-0 w-[85vw] md:w-80 h-[380px] bg-slate-900 border border-brand/30 rounded-2xl shadow-2xl flex flex-col z-[1000] overflow-hidden">
+        <div id="chat-window" class="hidden fixed bottom-[90px] left-1/2 -translate-x-1/2 md:left-6 md:translate-x-0 w-[88vw] md:w-80 h-[400px] max-h-[60vh] bg-slate-900 border border-brand/30 rounded-2xl shadow-2xl flex flex-col z-[1000] overflow-hidden">
     
-            <div class="h-12 bg-brand flex-shrink-0 flex items-center justify-between px-4 text-white font-bold border-b border-white/10">
+            <div class="shrink-0 h-12 bg-brand flex items-center justify-between px-4 text-white font-bold">
                 <span class="text-xs">Sky's AI Assistant</span>
-                <button onclick="toggleChat()" class="text-2xl leading-none">&times;</button>
+                <button onclick="toggleChat()" class="text-2xl leading-none p-2">&times;</button>
             </div>
         
-            <div id="chat-content" class="flex-grow overflow-y-auto p-4 space-y-4 bg-slate-900/50 custom-scrollbar text-[11px] text-gray-300">
-                <div class="bg-slate-800 p-2 rounded-lg inline-block">Hi! Sky's AI is under development. How can I help you?</div>
+            <div id="chat-content" class="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-950/50 text-[11px] text-gray-300">
+                <div class="bg-slate-800 p-2 rounded-lg inline-block">Hi! Sky's AI is under development. How can I help?</div>
             </div>
         
-            <div class="h-14 bg-slate-900 flex-shrink-0 border-t border-white/10 flex items-center p-2 gap-2">
+            <div class="shrink-0 bg-slate-900 p-3 border-t border-white/10 flex items-center gap-2">
                 <input type="text" id="user-input" 
-                       class="flex-grow bg-slate-800 border-none rounded-lg px-3 py-2 text-white text-sm focus:ring-1 focus:ring-brand outline-none" 
-                       placeholder="Type here...">
+                       class="flex-1 min-w-0 bg-slate-800 border-none rounded-lg px-3 py-2 text-white text-[14px] focus:ring-1 focus:ring-brand outline-none" 
+                       placeholder="Ask me...">
                 <button onclick="askAI()" 
-                        class="w-10 h-10 bg-brand rounded-lg text-white flex items-center justify-center flex-shrink-0 active:scale-95 transition-transform">
+                        class="shrink-0 w-10 h-10 bg-brand rounded-lg text-white flex items-center justify-center shadow-lg active:scale-90 transition-transform">
                     <i class="fas fa-paper-plane text-xs"></i>
                 </button>
             </div>
@@ -1500,6 +1496,7 @@ class ProductSpider(scrapy.Spider):
         function toggleChat() {
             const chatWindow = document.getElementById('chat-window');
             chatWindow.classList.toggle('hidden');
+            chatWindow.classList.toggle('show-chat');
         }
 
         function askAI() {
@@ -1533,6 +1530,7 @@ class ProductSpider(scrapy.Spider):
 </body>
 
 </html>
+
 
 
 
