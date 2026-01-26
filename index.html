@@ -194,6 +194,28 @@
             opacity: 0.7;
             transform: scale(0.98);
         }
+
+        /* Mobile responsiveness for AI Chat */
+        @media (max-width: 768px) {
+            #chat-window {
+                bottom: 85px !important; /* Robot button ની ઉપર બરાબર દેખાય */
+                left: 10px !important;
+                right: 10px !important;
+            }
+            
+            #chat-content {
+                max-height: calc(70vh - 110px); /* Header અને Input ની જગ્યા છોડીને બાકીની જગ્યામાં સ્ક્રોલ થશે */
+            }
+        }
+        
+        /* Scrollbar styling */
+        #chat-content::-webkit-scrollbar {
+            width: 4px;
+        }
+        #chat-content::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
     </style>
 </head>
 
@@ -844,22 +866,22 @@
 
     <!-- AI Career Counselor Section -->
     <div id="ai-bot-container" class="fixed bottom-6 left-6 z-[100]">
-        <div id="chat-window"
-            class="hidden w-80 h-96 bg-slate-900 border border-brand/30 rounded-2xl shadow-2xl flex flex-col overflow-hidden mb-4">
-            <div class="bg-brand p-4 text-white font-bold flex justify-between items-center">
-                <span>Sky's AI Assistant</span>
-                <button onclick="toggleChat()" class="text-white">×</button>
+        <div id="chat-window" class="hidden fixed bottom-24 left-4 right-4 md:right-auto md:left-6 md:w-80 w-auto max-w-[95vw] h-[400px] max-h-[70vh] bg-slate-900 border border-brand/30 rounded-2xl shadow-2xl flex flex-col overflow-hidden mb-4 z-[1000]">
+    
+            <div class="bg-brand p-4 text-white font-bold flex justify-between items-center shrink-0">
+                <span class="text-sm">Sky's AI Assistant</span>
+                <button onclick="toggleChat()" class="text-white text-xl p-1">&times;</button>
             </div>
-            <div id="chat-content" class="flex-1 p-4 overflow-y-auto text-sm text-gray-300 space-y-4">
-                <div class="bg-slate-800 p-2 rounded-lg">Hi! I'm Sky's AI representative. Ask me anything about his
-                    skills or projects!</div>
+        
+            <div id="chat-content" class="flex-1 p-4 overflow-y-auto text-xs text-gray-300 space-y-4 bg-slate-900/50">
+                <div class="bg-slate-800 p-2 rounded-lg inline-block">Hi! I'm Sky's AI representative. How can I help you today?</div>
             </div>
-            <div class="p-3 border-t border-white/10 flex gap-2">
-                <input type="text" id="user-input"
-                    class="flex-1 bg-slate-800 border-none rounded-lg px-3 py-2 text-white focus:ring-1 focus:ring-brand"
-                    placeholder="Ask something...">
-                <button onclick="askAI()" class="bg-brand px-3 py-2 rounded-lg text-white"><i
-                        class="fas fa-paper-plane"></i></button>
+        
+            <div class="p-3 border-t border-white/10 flex gap-2 bg-slate-900 shrink-0">
+                <input type="text" id="user-input" class="flex-1 bg-slate-800 border-none rounded-lg px-3 py-2 text-white text-sm focus:ring-1 focus:ring-brand outline-none" placeholder="Type here...">
+                <button onclick="askAI()" class="bg-brand w-10 h-10 rounded-lg text-white flex items-center justify-center shrink-0 hover:bg-brand-dark transition">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
             </div>
         </div>
 
@@ -1506,6 +1528,7 @@ class ProductSpider(scrapy.Spider):
 </body>
 
 </html>
+
 
 
 
