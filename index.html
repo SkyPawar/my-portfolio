@@ -185,10 +185,9 @@
         }
 
         .hero-name {
-            -webkit-touch-callout: none;
-            -webkit-user-select: none;
+            display: inline-block;
             user-select: none;
-            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
         }
     </style>
 </head>
@@ -301,7 +300,8 @@
                 Profile</p>
 
             <h1 class="text-5xl md:text-7xl font-bold mb-6 text-white drop-shadow-2xl">
-                Hi, I'm <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">Sky
+                Hi, I'm <span
+                    class="hero-name text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">Sky
                     Pawar</span>
             </h1>
 
@@ -326,14 +326,12 @@
                     <i class="fas fa-download"></i> Download CV
                 </a>
             </div>
-            <div class="mt-6 flex justify-center items-center gap-2 animate-bounce magic-hint">
+            <div class="mt-6 flex justify-center items-center gap-2 animate-bounce">
                 <div class="px-4 py-1.5 rounded-full bg-brand/10 border border-brand/20 backdrop-blur-md">
                     <p class="text-[10px] md:text-xs font-mono text-brand-light tracking-widest uppercase">
                         <i class="fas fa-terminal mr-2"></i>
-                        <span class="hidden md:inline">Type <span class="font-bold underline">"hack"</span>
-                            anywhere</span>
-                        <span class="md:hidden">Long press <span class="font-bold underline">"LOGO"</span> for 3s</span>
-                        to see magic | Reload to exit
+                        Type <span class="font-bold underline">"hack"</span> anywhere to see magic of site | Reload to
+                        exit
                     </p>
                 </div>
             </div>
@@ -1266,7 +1264,6 @@ class ProductSpider(scrapy.Spider):
                 }
             };
 
-            // આ ઇફેક્ટ ત્યારે જ શરૂ થશે જ્યારે યુઝર સેક્શન સુધી સ્ક્રોલ કરશે
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -1364,37 +1361,6 @@ class ProductSpider(scrapy.Spider):
         // Hacker Mode Easter Egg Logic
         let inputBuffer = "";
         const secretCode = "hack";
-        const logo = document.querySelector('nav h1') || document.querySelector('.hero-name');
-
-        let pressTimer;
-
-        logo.addEventListener('contextmenu', (e) => {
-            e.preventDefault();
-        });
-
-        logo.addEventListener('touchstart', (e) => {
-            logo.style.transform = "scale(0.95)";
-            logo.style.transition = "transform 3s linear";
-            pressTimer = window.setTimeout(() => {
-                toggleHackerMode();
-            }, 3000);
-        }, { passive: true });
-
-        logo.addEventListener('touchend', (e) => {
-            logo.style.transform = "scale(1)";
-            logo.style.transition = "0.3s";
-            clearTimeout(pressTimer);
-        });
-
-        // ડેસ્કટોપ માટે ક્લિક હોલ્ડ
-        logo.addEventListener('mousedown', (e) => {
-            pressTimer = window.setTimeout(() => {
-                toggleHackerMode();
-            }, 3000);
-        });
-
-        logo.addEventListener('mouseup', () => clearTimeout(pressTimer));
-        logo.addEventListener('mouseleave', () => clearTimeout(pressTimer));
 
         window.addEventListener('keydown', (e) => {
             inputBuffer += e.key.toLowerCase();
@@ -1431,7 +1397,7 @@ class ProductSpider(scrapy.Spider):
 
             const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$#@%&*";
             const fontSize = 16;
-            const columns = canvas.width / (window.innerWidth < 768 ? 10 : 16);;
+            const columns = canvas.width / fontSize;
             const drops = Array(Math.floor(columns)).fill(1);
 
             function draw() {
@@ -1449,6 +1415,25 @@ class ProductSpider(scrapy.Spider):
             }
             setInterval(draw, 33);
         }
+    </script>
+    <script>
+        const logo = document.querySelector('.hero-name');
+        let tapCount = 0;
+        let tapTimer;
+
+        logo.addEventListener('click', () => {
+            tapCount++;
+
+            clearTimeout(tapTimer);
+            tapTimer = setTimeout(() => {
+                tapCount = 0;
+            }, 500);
+
+            if (tapCount === 3) {
+                tapCount = 0;
+                toggleHackerMode();
+            }
+        });
     </script>
 </body>
 
