@@ -183,6 +183,13 @@
         .magic-hint:hover {
             opacity: 1;
         }
+
+        .hero-name {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+            cursor: pointer;
+        }
     </style>
 </head>
 
@@ -1361,13 +1368,21 @@ class ProductSpider(scrapy.Spider):
 
         let pressTimer;
 
+        logo.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+        });
+
         logo.addEventListener('touchstart', (e) => {
+            logo.style.transform = "scale(0.95)";
+            logo.style.transition = "transform 3s linear";
             pressTimer = window.setTimeout(() => {
                 toggleHackerMode();
             }, 3000);
-        });
+        }, { passive: true });
 
         logo.addEventListener('touchend', (e) => {
+            logo.style.transform = "scale(1)";
+            logo.style.transition = "0.3s";
             clearTimeout(pressTimer);
         });
 
@@ -1378,9 +1393,8 @@ class ProductSpider(scrapy.Spider):
             }, 3000);
         });
 
-        logo.addEventListener('mouseup', (e) => {
-            clearTimeout(pressTimer);
-        });
+        logo.addEventListener('mouseup', () => clearTimeout(pressTimer));
+        logo.addEventListener('mouseleave', () => clearTimeout(pressTimer));
 
         window.addEventListener('keydown', (e) => {
             inputBuffer += e.key.toLowerCase();
