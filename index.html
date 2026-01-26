@@ -319,12 +319,14 @@
                     <i class="fas fa-download"></i> Download CV
                 </a>
             </div>
-            <div class="mt-6 flex justify-center items-center gap-2 animate-bounce">
+            <div class="mt-6 flex justify-center items-center gap-2 animate-bounce magic-hint">
                 <div class="px-4 py-1.5 rounded-full bg-brand/10 border border-brand/20 backdrop-blur-md">
                     <p class="text-[10px] md:text-xs font-mono text-brand-light tracking-widest uppercase">
                         <i class="fas fa-terminal mr-2"></i>
-                        Type <span class="font-bold underline">"hack"</span> anywhere to see magic of site | Reload to
-                        exit
+                        <span class="hidden md:inline">Type <span class="font-bold underline">"hack"</span>
+                            anywhere</span>
+                        <span class="md:hidden">Long press <span class="font-bold underline">"LOGO"</span> for 3s</span>
+                        to see magic | Reload to exit
                     </p>
                 </div>
             </div>
@@ -1355,6 +1357,30 @@ class ProductSpider(scrapy.Spider):
         // Hacker Mode Easter Egg Logic
         let inputBuffer = "";
         const secretCode = "hack";
+        const logo = document.querySelector('nav h1') || document.querySelector('.hero-name');
+
+        let pressTimer;
+
+        logo.addEventListener('touchstart', (e) => {
+            pressTimer = window.setTimeout(() => {
+                toggleHackerMode();
+            }, 3000);
+        });
+
+        logo.addEventListener('touchend', (e) => {
+            clearTimeout(pressTimer);
+        });
+
+        // ડેસ્કટોપ માટે ક્લિક હોલ્ડ
+        logo.addEventListener('mousedown', (e) => {
+            pressTimer = window.setTimeout(() => {
+                toggleHackerMode();
+            }, 3000);
+        });
+
+        logo.addEventListener('mouseup', (e) => {
+            clearTimeout(pressTimer);
+        });
 
         window.addEventListener('keydown', (e) => {
             inputBuffer += e.key.toLowerCase();
@@ -1391,7 +1417,7 @@ class ProductSpider(scrapy.Spider):
 
             const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$#@%&*";
             const fontSize = 16;
-            const columns = canvas.width / fontSize;
+            const columns = canvas.width / (window.innerWidth < 768 ? 10 : 16);;
             const drops = Array(Math.floor(columns)).fill(1);
 
             function draw() {
