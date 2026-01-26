@@ -149,10 +149,57 @@
             color: #fff;
             font-weight: 600;
         }
+
+        /* Hacker Mode Styles */
+        .hacker-mode {
+            filter: hue-rotate(120deg) brightness(0.8) contrast(1.2) !important;
+            background-color: #000 !important;
+            color: #0f0 !important;
+        }
+
+        .hacker-mode img,
+        .hacker-mode iframe {
+            filter: grayscale(100%) brightness(0.7) sepia(100%) hue-rotate(50deg) saturate(500%) !important;
+        }
+
+        #matrix-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            display: none;
+        }
+
+        /* To add class in Hero Section */
+        .magic-hint {
+            opacity: 0.5;
+            transition: opacity 0.3s ease;
+            cursor: default;
+        }
+
+        .magic-hint:hover {
+            opacity: 1;
+        }
     </style>
 </head>
 
 <body class="antialiased selection:bg-brand selection:text-white">
+    <div id="voice-control-container" class="fixed top-24 right-8 z-[100] flex flex-col items-end gap-3">
+        <div id="voice-tooltip"
+            class="hidden bg-slate-900 border border-white/10 px-3 py-1 rounded-lg text-[10px] text-brand-light font-mono uppercase tracking-widest shadow-xl">
+            Listening...
+        </div>
+
+        <button id="mic-btn"
+            class="w-12 h-12 bg-slate-900 border border-white/10 rounded-full flex items-center justify-center text-gray-400 hover:text-brand-light hover:border-brand-light transition-all duration-300 shadow-2xl group">
+            <i id="mic-icon" class="fas fa-microphone"></i>
+            <span id="mic-ring" class="absolute inset-0 rounded-full border-2 border-brand animate-ping hidden"></span>
+        </button>
+    </div>
+    <canvas id="matrix-canvas"></canvas>
 
     <nav class="fixed z-50 glass-nav">
         <div class="max-w-7xl mx-auto px-6">
@@ -271,6 +318,15 @@
                     class="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-emerald-600 hover:to-green-500 text-white font-bold py-3 px-8 rounded-full shadow-lg transition transform hover:scale-105 flex items-center gap-2">
                     <i class="fas fa-download"></i> Download CV
                 </a>
+            </div>
+            <div class="mt-6 flex justify-center items-center gap-2 animate-bounce">
+                <div class="px-4 py-1.5 rounded-full bg-brand/10 border border-brand/20 backdrop-blur-md">
+                    <p class="text-[10px] md:text-xs font-mono text-brand-light tracking-widest uppercase">
+                        <i class="fas fa-terminal mr-2"></i>
+                        Type <span class="font-bold underline">"hack"</span> anywhere to see magic of site | Reload to
+                        exit
+                    </p>
+                </div>
             </div>
 
             <div class="mt-12 flex justify-center space-x-6 text-white/80">
@@ -1213,6 +1269,146 @@ class ProductSpider(scrapy.Spider):
 
             observer.observe(document.getElementById('terminal-content'));
         });
+    </script>
+    <script>
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+        if (SpeechRecognition) {
+            const recognition = new SpeechRecognition();
+            recognition.lang = 'en-US';
+            recognition.interimResults = false;
+
+            const micBtn = document.getElementById('mic-btn');
+            const micIcon = document.getElementById('mic-icon');
+            const micRing = document.getElementById('mic-ring');
+            const voiceTooltip = document.getElementById('voice-tooltip');
+
+            let isListening = false;
+
+            // It's start listening or stop based on current state
+            micBtn.addEventListener('click', () => {
+                if (!isListening) {
+                    startListening();
+                } else {
+                    stopListening();
+                }
+            });
+
+            function startListening() {
+                recognition.start();
+                isListening = true;
+
+                // UI Updates
+                micIcon.classList.replace('fa-microphone', 'fa-microphone-lines');
+                micIcon.classList.add('text-brand-light');
+                micRing.classList.remove('hidden');
+                voiceTooltip.classList.remove('hidden');
+            }
+
+            function stopListening() {
+                recognition.stop();
+                isListening = false;
+
+                // UI Updates
+                micIcon.classList.replace('fa-microphone-lines', 'fa-microphone');
+                micIcon.classList.remove('text-brand-light');
+                micRing.classList.add('hidden');
+                voiceTooltip.classList.add('hidden');
+            }
+
+            recognition.onresult = (event) => {
+                const command = event.results[0][0].transcript.toLowerCase().trim();
+                console.log("Command Received:", command);
+
+                // It's stop automatically after getting result
+                stopListening();
+
+                // Navigation Logic
+                if (command.includes('project')) {
+                    window.location.hash = 'projects';
+                } else if (command.includes('about')) {
+                    window.location.hash = 'about';
+                } else if (command.includes('blog')) {
+                    window.location.hash = 'blogs';
+                } else if (command.includes('contact')) {
+                    window.location.hash = 'contact';
+                } else if (command.includes('resume') || command.includes('cv')) {
+                    window.open('images/Sky - Curriculum Vitae.pdf', '_blank');
+                }
+            };
+
+            // It's stop automatically after getting result
+            recognition.onspeechend = () => {
+                stopListening();
+            };
+
+            recognition.onerror = () => {
+                stopListening();
+            };
+
+        } else {
+            console.error("Speech Recognition is not supported.");
+            document.getElementById('voice-control-container').classList.add('hidden');
+        }
+    </script>
+    <script>
+        // Hacker Mode Easter Egg Logic
+        let inputBuffer = "";
+        const secretCode = "hack";
+
+        window.addEventListener('keydown', (e) => {
+            inputBuffer += e.key.toLowerCase();
+
+            // Keep the buffer length to last 4 characters
+            if (inputBuffer.length > 4) inputBuffer = inputBuffer.substring(1);
+
+            if (inputBuffer === secretCode) {
+                toggleHackerMode();
+            }
+        });
+
+        function toggleHackerMode() {
+            const isHacker = document.body.classList.toggle('hacker-mode');
+            const canvas = document.getElementById('matrix-canvas');
+            const hint = document.querySelector('.magic-hint');
+
+            if (isHacker) {
+                if (hint) hint.style.display = 'none';
+                canvas.style.display = 'block';
+                startMatrixRain();
+            } else {
+                location.reload();
+            }
+        }
+
+        // Matrix Rain Animation
+        function startMatrixRain() {
+            const canvas = document.getElementById('matrix-canvas');
+            const ctx = canvas.getContext('2d');
+
+            canvas.height = window.innerHeight;
+            canvas.width = window.innerWidth;
+
+            const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$#@%&*";
+            const fontSize = 16;
+            const columns = canvas.width / fontSize;
+            const drops = Array(Math.floor(columns)).fill(1);
+
+            function draw() {
+                ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = "#0f0";
+                ctx.font = fontSize + "px monospace";
+
+                for (let i = 0; i < drops.length; i++) {
+                    const text = characters.charAt(Math.floor(Math.random() * characters.length));
+                    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                    if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+                    drops[i]++;
+                }
+            }
+            setInterval(draw, 33);
+        }
     </script>
 </body>
 
